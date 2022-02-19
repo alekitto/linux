@@ -372,6 +372,15 @@ static int tas2770_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
 	if (ret < 0)
 		return ret;
 
+
+	ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG0,
+					    TAS2770_TDM_CFG_REG0_FPOL_MASK,
+					    (fpol_preinv ^ invert_fpol)
+					    	? TAS2770_TDM_CFG_REG0_FPOL_RSING
+					    	: TAS2770_TDM_CFG_REG0_FPOL_FALING);
+	if (ret < 0)
+		return ret;
+
 	ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG0,
 					    TAS2770_TDM_CFG_REG0_FPOL_MASK,
 					    (fpol_preinv ^ invert_fpol)
